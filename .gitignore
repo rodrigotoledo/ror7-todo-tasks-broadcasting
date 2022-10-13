@@ -36,3 +36,5 @@
 /tmp
 /coverage
 node_modules/
+keyfile.json
+.DS_Store

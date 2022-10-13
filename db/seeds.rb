@@ -8,9 +8,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 require 'faker'
-User.create!(email: Faker::Internet.email, password: 'aassdd123', password_confirmation: 'aassdd123')
-User.create!(email: 'admin@test.com', password: 'aassdd123', password_confirmation: 'aassdd123')
+users = []
+users << User.create!(email: 'test@test.com', password: 'aassdd123', password_confirmation: 'aassdd123')
+users << User.create!(email: 'admin@test.com', password: 'aassdd123', password_confirmation: 'aassdd123')
 
-10.times.each do
-  Todo.create(title: Faker::Lorem.question, content: Faker::Lorem.paragraph)
+users.each do |user|
+  4.times.each do
+    user.todos.create!(title: Faker::Lorem.question, content: Faker::Lorem.paragraph)
+  end
 end

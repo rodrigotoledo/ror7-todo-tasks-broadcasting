@@ -22,3 +22,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# Helper to install firestore on m1
+https://github.com/grpc/grpc/issues/24846

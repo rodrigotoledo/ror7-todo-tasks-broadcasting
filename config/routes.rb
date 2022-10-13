@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get '/home', to: 'pages#home'
+  get '/signup', to: 'pages#signup'
+  get '/login', to: 'pages#login'
+
+  post '/login', to: 'pages#login'
+  post '/logout', to: 'pages#logout'
+  post '/signup', to: 'pages#signup'
+
   resources :todos
-  root to: 'todos#index'
+  root 'todos#index'
   devise_for :users
 
   namespace :api do

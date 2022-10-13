@@ -96,3 +96,9 @@ gem 'dotenv-rails'
 gem 'pg'
 gem 'rails_heroicon'
 gem 'redis'
+
+gem 'google-cloud-firestore'
+gem 'google-protobuf', '~> 3.21.2', platforms: :ruby
+gem 'grpc', '~> 1.42.0', platforms: :ruby
+gem 'pry'
+gem 'sinatra', '~> 2.0'

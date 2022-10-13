@@ -4,11 +4,13 @@ module Api
   class TodosController < ActionController::API
     before_action :set_todo, only: %i[update destroy]
     def index
-      render json: Todo.all
+      user = User.first
+      render json: user.todos
     end
 
     def create
-      @todo = Todo.new(todo_params)
+      user = User.first
+      @todo = user.todos.build(todo_params)
       if @todo.save
         render json: @todo, status: :created
       else
