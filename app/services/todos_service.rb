@@ -2,7 +2,7 @@ require 'google/cloud/firestore'
 class TodosService
   def self.connection
     Google::Cloud::Firestore.new project_id: 'ror-real-time',
-                                 keyfile: Rails.application.credentials.keyfile
+                                 keyfile: ENV.fetch('KEYFILE', nil)
   end
 
   def self.all
