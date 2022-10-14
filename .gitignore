@@ -38,3 +38,4 @@
 node_modules/
 keyfile.json
 .DS_Store
+.env
