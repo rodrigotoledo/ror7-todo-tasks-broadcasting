@@ -4,7 +4,6 @@ class Todo < ApplicationRecord
   has_rich_text :content
 
   validates :title, presence: true
-  after_create :notify_external_provider
   after_destroy :broadcast_to_application
   after_save :broadcast_to_application
 
@@ -13,9 +12,5 @@ class Todo < ApplicationRecord
   def broadcast_to_application
     broadcast_update_to 'todos', target: "todos_#{user_id}", partial: 'todos/list',
                                  locals: { todos: user.todos.all }
-  end
-
-  def notify_external_provider
-    TodosService.create(user.id, user.external_auth_id)
   end
 end
