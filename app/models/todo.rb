@@ -4,13 +4,21 @@ class Todo < ApplicationRecord
   has_rich_text :content
 
   validates :title, presence: true
-  after_destroy :broadcast_to_application
-  after_save :broadcast_to_application
+  after_create_commit :set_todo
+  after_update_commit :update_todo
+  after_destroy_commit :destroy_todo
 
-  protected
+  private
 
-  def broadcast_to_application
-    broadcast_update_to 'todos', target: "todos_#{user_id}", partial: 'todos/list',
-                                 locals: { todos: user.todos.all }
+  def set_todo
+    broadcast_prepend_to "todos", partial: "todos/todo", target: "todos"
+  end
+
+  def update_todo
+    broadcast_update_to "todos", partial: "todos/todo", target: "todo_#{id}"
+  end
+
+  def destroy_todo
+    broadcast_remove_to "todo_#{id}"
   end
 end

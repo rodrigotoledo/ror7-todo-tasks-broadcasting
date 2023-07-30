@@ -3,13 +3,13 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Todos</h1>
-    <%= link_to "New todo", new_todo_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-  </div>
+    <%= turbo_frame_tag Todo.new do %>
+    <%= link_to "New todo", new_todo_path, class: "rounded-lg w-auto inline-block py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <% end %>
 
   <%= turbo_stream_from "todos" %>
-  <%= turbo_frame_tag "todos_#{current_user.id}" do %>
-    <%= render "todos/list", todos: @todos %>
-  <% end %>
+  <div class="min-w-full" id="todos">
+    <%= render @todos %>
+  </div>
 </div>

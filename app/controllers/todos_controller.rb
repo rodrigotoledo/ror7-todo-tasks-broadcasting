@@ -7,15 +7,31 @@ class TodosController < ApplicationController
   end
 
   # GET /todos/1 or /todos/1.json
-  def show; end
+  def show
+    respond_to do |format|
+      format.html # Renderiza a view HTML normalmente
+      format.turbo_stream
+      format.json { render json: @todo } # Exemplo de resposta JSON
+    end
+  end
 
   # GET /todos/new
   def new
     @todo = Todo.new
+    respond_to do |format|
+      format.html # Renderiza a view HTML normalmente
+      format.turbo_stream
+    end
   end
 
   # GET /todos/1/edit
-  def edit; end
+  def edit
+    respond_to do |format|
+      format.html # Renderiza a view HTML normalmente
+      format.turbo_stream
+      format.json { render json: @todo } # Exemplo de resposta JSON
+    end
+  end
 
   # POST /todos or /todos.json
   def create
@@ -23,9 +39,11 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.save
+        format.turbo_stream
         format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully created.' }
         format.json { render :show, status: :created, location: @todo }
       else
+        format.turbo_stream
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
@@ -37,6 +55,7 @@ class TodosController < ApplicationController
     respond_to do |format|
       if @todo.update(todo_params)
         format.html { redirect_to todo_url(@todo), notice: 'Todo was successfully updated.' }
+        format.turbo_stream
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,6 +69,7 @@ class TodosController < ApplicationController
     @todo.destroy
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
       format.json { head :no_content }
     end

@@ -1,4 +1,6 @@
-<div id="<%= dom_id todo %>" class="border border-1 border-gray-200 p-4 mb-5 mt-5">
+<%= turbo_stream_from dom_id(todo) %>
+<%= turbo_frame_tag dom_id(todo) do %>
+<div class="border border-1 border-gray-200 p-4 mb-5 mt-5">
   <p class="my-5">
     <strong class="block font-medium mb-1">Title:</strong>
     <%= todo.title %>
@@ -14,8 +16,7 @@
     <%= todo.done ? "Yes" : "No" %>
   </p>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this todo", todo, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this todo", edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-  <% end %>
+  <%= link_to "Edit this todo", edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= link_to 'Destroy this todo', todo_path(todo), method: :delete, data: { turbo_method: :delete, turbo_frame: "todo_#{todo.id}", controller: 'todos', action: 'click->todos#destroy', confirm: "Tem certeza que deseja excluir este item?" }, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
 </div>
+<% end %>
