@@ -1,0 +1,19 @@
+version: '3'
+services:
+  # Serviço para o aplicativo Rails
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+
+  # Serviço para o Redis
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
